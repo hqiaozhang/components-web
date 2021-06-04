@@ -1,0 +1,29 @@
+
+ 
+@mixin panelbg1 {
+  background: #FFFFFF;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.10);
+  border-radius: 12px;
+}
+
+@mixin lineargrabg1 {
+  background-image: linear-gradient(-179deg, #1A569C 5%, #65AAFF 100%);
+}
+
+@mixin set-icon {
+  float: left;
+  font-size: 12px;
+  &::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    display: inline-block;
+    vertical-align: middle;
+    background-size: 100% 100%;
+  }
+}
+
+@mixin button-active {
+  background-image: linear-gradient(-223deg, #6CCAFF 0%, #498FFF 100%);
+  color: #fff;
+}

@@ -1,0 +1,107 @@
+
+@import "~@/assets/styles/constant/index.scss";
+
+
+// 字体图标
+ 
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 12px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; 
+}
+
+body {
+  font-size: 14px;
+  background: $bodyBg;
+  color: $main_c2;
+   
+}
+
+a {
+  text-decoration: none;
+  color: $main_c1;
+  cursor: pointer;
+}
+
+.empty_text {
+  color: #909399;
+  text-align: center;
+  padding-top: 10%;
+}
+
+.fr {
+  float: right !important;
+}
+.fl {
+  float: left;
+}
+ 
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+input[type="number"]{
+    -moz-appearance: textfield;
+}
+
+
+/*滚动条整体样式*/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+
+/*滚动条轨道样式*/
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+
+/*滚动条滑块的样式*/
+::-webkit-scrollbar-thumb {
+  background: rgba(129, 143, 180, 0.2);
+  border-radius: 3px;
+}
+/*滚动条上下按钮的样式*/
+::-webkit-scrollbar-button  {
+  background-color: transparent;
+  display: none;
+}
+
+/*两个滚动条交叉处的样式*/
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+textarea::-webkit-input-placeholder,
+input::-webkit-input-placeholder {
+  color: #818FB4 !important;
+  font-family: "微软雅黑";
+  font-size: 14px;
+}
+.pb85 {
+  padding-bottom: 85px !important;
+}
+@media only screen and (max-width: 1280px) {
+  .el-col-8 {
+    width: 48%;
+  }
+}
+
+.fc_blue {
+  color: #498FFF;
+}
+.fc_red {
+  color: #FA4B6C;
+}
+.el-table__row .operation a.fc_red, .el-table .cell a.fc_red, .el-table th > .cell a.fc_red{
+  color: red;
+}
+
+.lab_letter .el-form-item__label {
+  letter-spacing: 3px;
+}

@@ -1,0 +1,55 @@
+/*
+ * @Author: xiexiaoying
+ * @Date: 2021-02-01 13:12
+ * @Email: 634021337@qq.com
+ * @Description:
+ * @Last Modified by: zhanghongqiao
+ * @Last Modified time: 2021-06-03 15:07:15
+ */
+
+@import "~@/assets/styles/constant/index.scss";
+.editor_view {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.topbar_view {
+  position: absolute;
+  height: 60px;
+  width: 100vw;
+  z-index: 1000;
+}
+
+.toolbar_view {
+  position: absolute;
+  top: 60px;
+  width: 50px;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.config_view {
+  position: absolute;
+  right: 0;
+  top: 60px;
+  width: 300px;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.scale_view {
+  position: absolute;
+  right: 316px;
+  bottom: 16px;
+  z-index: 1000;
+  &.preview {
+    right: 40px;
+  }
+}
+
+.main_view { 
+  padding: 60px 300px 0 50px;
+  overflow: hidden;
+  height: calc(100vh - 60px);
+}

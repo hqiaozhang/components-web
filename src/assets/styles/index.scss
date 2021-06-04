@@ -1,0 +1,19 @@
+// 初始化样式
+@import "./reset";
+// 公用样式
+@import "./common";
+// element-ui样式重置
+@import "reset.element.ui";
+// 常量
+@import "./constant/index";
+@import url('https://fonts.googleapis.com/css?family=Molengo|Noto+Sans+SC|Noto+Serif+SC|Lobster|ZCOOL+QingKe+HuangYou|ZCOOL+XiaoWei');
+@import url('//at.alicdn.com/t/font_1127427_8156c125kn9.css');
+html,body,#app {
+  height: 100%;
+}
+
+.router_container {
+  width: 100vw;
+  height: 100vh; 
+} 
+ 
