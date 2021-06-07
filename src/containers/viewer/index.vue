@@ -39,7 +39,10 @@
         <div class="filler"  v-if="item.data.type == 'image'"
           :style="{width: '100%', height: '100%', backgroundColor: item.bgcolor}">
           <div class="imagecontainer" 
-            :style="{backgroundImage: `url(${item.data.datacon.img})`, backgroundSize: item.data.datacon.imgSize, opacity: item.data.datacon.opacity}">
+            :style="{backgroundImage: `url(${item.data.datacon.img})`, 
+            backgroundSize: item.data.datacon.imgSize, 
+            backgroundRepeat: item.data.datacon.repeat,  
+            opacity: item.data.datacon.opacity}">
             <div class="placeholder" v-show="!item.data.datacon.img"></div>
           </div>
         </div>

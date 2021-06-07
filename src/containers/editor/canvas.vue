@@ -5,7 +5,7 @@
         <div style="margin-bottom: 16px;"> 发布成功！当前图表的公开链接为：</div>
         <el-input v-model="publicUrl" readonly />
         <span slot="footer">
-          <el-button type="primary" @click="$parent.publishPopVisible = false">确定</el-button>
+          <el-button type="primary" @click="handleCopyUrl">复制链接</el-button>
         </span>
 
         
@@ -72,7 +72,13 @@
               <div class="filler" v-if="item.data.type == 'text'"
                 :style="{width: '100%', height: '100%', backgroundColor: item.bgcolor}">
                 <div class="textcontainer"  
-                  :style="{fontFamily: item.data.datacon.fontFamily, fontWeight: item.data.datacon.bold ? 'bold' : 'normal', fontStyle: item.data.datacon.italic ? 'italic' : 'normal', color: item.data.datacon.color, fontSize: item.data.datacon.fontSize + 'px', textStroke: item.data.datacon.stroke ? item.data.datacon.strokeSize+'px '+item.data.datacon.strokeColor : '0', textShadow: item.data.datacon.shadow ? '5px 5px '+item.data.datacon.shadowBlur+'px '+item.data.datacon.shadowColor : 'none'}"
+                  :style="{fontFamily: item.data.datacon.fontFamily, 
+                  fontWeight: item.data.datacon.bold ? 'bold' : 'normal', 
+                  fontStyle: item.data.datacon.italic ? 'italic' : 'normal', 
+                  color: item.data.datacon.color, 
+                  fontSize: item.data.datacon.fontSize + 'px', 
+                  textStroke: item.data.datacon.stroke ? item.data.datacon.strokeSize+'px '+item.data.datacon.strokeColor : '0', 
+                  textShadow: item.data.datacon.shadow ? '5px 5px '+item.data.datacon.shadowBlur+'px '+item.data.datacon.shadowColor : 'none'}"
                   v-text="item.data.datacon.text"> 
                 </div>
               </div>
@@ -80,7 +86,10 @@
               <div class="filler"  v-if="item.data.type == 'image'"
                 :style="{width: '100%', height: '100%', backgroundColor: item.bgcolor}">
                 <div class="imagecontainer" 
-                  :style="{backgroundImage: `url(${item.data.datacon.img})`, backgroundSize: item.data.datacon.imgSize, opacity: item.data.datacon.opacity}">
+                  :style="{backgroundImage: `url(${item.data.datacon.img})`, 
+                  backgroundSize: item.data.datacon.imgSize, 
+                  backgroundRepeat: item.data.datacon.repeat,  
+                  opacity: item.data.datacon.opacity}">
                   <div class="placeholder" v-show="!item.data.datacon.img"></div>
                 </div>
               </div>
@@ -90,23 +99,24 @@
                 <div class="bordercontainer" :class="'border' + item.data.datacon.borderId"
                 :style="{opacity: item.data.datacon.opacity}"> 
                 </div>
-              </div>
+              </div> 
             </vue-drag-resize>
             <div class="mock" :class="{front: screenDraggable}"></div>
           </div>
         </vue-draggable-resizable>
       </div>
-
+      <input id="input" style="opacity: 0; height: 1px; display: none" />        
     </div>
 </template>
 
 <script>
-/* eslint-disable */
+ import { messagePopup } from '@/utils/util' 
 export default {
   props: ['scale'],
   data() {
     return {
       screenDraggable: false,
+      timer: null
     };
   },
   computed: {
@@ -130,6 +140,17 @@ export default {
     },
   },
   methods: {
+    handleCopyUrl() {
+       var input = document.getElementById("input");
+      input.value = this.publicUrl; // 修改文本框的内容
+      input.select(); // 选中文本
+      document.execCommand("copy"); // 执行浏览器复制命令 
+       messagePopup('复制成功', 'success')
+       clearTimeout(this.timer)
+      this.timer = setTimeout(() => {
+          this.$parent.publishPopVisible = false
+      }, 1000)
+    },
     handleSpaceDown() {
       this.screenDraggable = true;
     },

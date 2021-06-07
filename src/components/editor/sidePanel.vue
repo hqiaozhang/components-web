@@ -24,12 +24,18 @@
      </div>
 
      <div class="component_list" v-else-if="panelKey !== ''">
-       <div class="list_item" v-for="(item, i) in componentList[panelKey].children" :key="i" @click="handleAddComponent(item)">
-         <div class="img_wrapper">
-           <img :src="item.img" /> 
-         </div>
-         <div class="name">{{item.name}}</div>
-       </div>
+        <!-- <draggable  v-model="componentList[panelKey].children"
+          @start="move"
+          @end="handleAddComponent"> -->
+          <!--  @click="handleAddComponent(item)" -->
+            <div class="list_item" v-for="(item, i) in componentList[panelKey].children" :key="i" 
+              @click="handleAddComponent(item)">
+              <div class="img_wrapper">
+                <img :src="item.img" /> 
+              </div>
+              <div class="name">{{item.name}}</div>
+            </div>
+          <!-- </draggable>    -->
      </div>
    </div>
 </template>
@@ -46,6 +52,7 @@ export default {
   data() {
     return {
       drag: false,
+      nodeMenu: {},
       componentList: {
         chart: {
           name: "图表",
@@ -53,78 +60,49 @@ export default {
             {
               id: "line",
               name: "折线图",
-              img: require("@/assets/images/charts/line.png")
+              img: 'static/images/charts/line.png'
             },
             {
               id: "histogram",
               name: "柱状图",
-              img: require("@/assets/images/charts/histogram.png")
+              img: 'static/images/charts/histogram.png'
             },
             {
               id: "bar",
               name: "条形图",
-              img: require("@/assets/images/charts/bar.png")
+              img: 'static/images/charts/bar.png'
             },
             {
               id: "pie",
               name: "饼图",
-              img: require("@/assets/images/charts/pie.png")
+              img: 'static/images/charts/pie.png'
             },
             {
               id: "ring",
               name: "环状图",
-              img: require("@/assets/images/charts/ring.png")
+              img: 'static/images/charts/ring.png'
             },
             {
               id: "funnel",
               name: "漏斗图",
-              img: require("@/assets/images/charts/funnel.png")
+              img: 'static/images/charts/funnel.png'
             },
             {
               id: "radar",
               name: "雷达图",
-              img: require("@/assets/images/charts/radar.png")
-            },
-            // {
-            //   id: "map-world",
-            //   name: "世界地图",
-            //   img: require("@/assets/images/charts/map-world.png")
-            // },
+              img: 'static/images/charts/radar.png'
+            }, 
             {
               id: "map",
               name: "中国地图",
-              img: require("@/assets/images/charts/map-china.png")
-            },
-            // {
-            //   id: "sankey",
-            //   name: "桑基图",
-            //   img: require("@/assets/images/charts/sankey.png")
-            // },
-            // {
-            //   id: "scatter",
-            //   name: "散点图",
-            //   img: require("@/assets/images/charts/scatter.png")
-            // },
-            // {
-            //   id: "candle",
-            //   name: "K线图",
-            //   img: require("@/assets/images/charts/candle.png")
-            // },
-            // {
-            //   id: "gauge",
-            //   name: "仪表盘",
-            //   img: require("@/assets/images/charts/gauge.png")
-            // },
+              img: 'static/images/charts/map-china.png'
+            }, 
             {
               id: "liquidfill",
               name: "水球图",
-              img: require("@/assets/images/charts/liquidfill.png")
+              img: 'static/images/charts/liquidfill.png'
             },
-            // {
-            //   id: "wordcloud",
-            //   name: "词云图",
-            //   img: require("@/assets/images/charts/wordcloud.png")
-            // }
+           
           ]
         },
         text: {
@@ -133,7 +111,7 @@ export default {
             {
               id: "text",
               name: "文本",
-              img: require("@/assets/images/charts/text.png")
+              img: 'static/images/charts/text.png'
             }
           ]
         },
@@ -142,8 +120,22 @@ export default {
           children: [
             {
               id: "image",
-              name: "图片",
-              img: require("@/assets/images/charts/image.png")
+              name: "自定义图片",
+              type: 'custom',
+              img: 'static/images/charts/image.png'
+            }, 
+            {
+              id: "image",
+              name: "水位",
+              img: 'static/images/tools/1.png'
+            },{
+              id: "image",
+              name: "水位",
+              img: 'static/images/tools/2.png'
+            },{
+              id: "image",
+              name: "凝汽器",
+              img: 'static/images/tools/3.png'
             }
           ]
         },
@@ -153,7 +145,7 @@ export default {
             {
               id: "border",
               name: "边框",
-              img: require("@/assets/images/charts/border.png")
+              img: 'static/images/charts/border.png'
             }
           ]
         }
@@ -175,7 +167,13 @@ export default {
       this.drag = false;
       this.$parent.$parent.setActiveComponentByIndex(e.newIndex);
     },
-    handleAddComponent(item) {
+     // 拖拽开始时触发
+    move(evt, a, b, c) {  
+      var index = evt.item.attributes.index.nodeValue;
+      this.nodeMenu = this.componentList[this.panelKey].children[index]
+    },
+
+    handleAddComponent(item) { 
       let initData = {};
       if (item.id == 'text') {
         initData = {
@@ -199,8 +197,10 @@ export default {
         initData = {
           type: "image",
           datacon: {
-            img: '',
-            imgSize: 'cover',
+            repeat: 'no-repeat', 
+            img: item.type == 'custom' ? '' : item.img,
+            type: item.type,
+            imgSize: 'contain',
             opacity: 1,
           }
         };
@@ -270,10 +270,11 @@ export default {
 <style lang="scss" scoped>
 .panel {
   height: 100%;
-  width: 250px;
+  // width: 250px;
+  width: 100%;
   display: flex;
   flex-direction: column;
-  background: #ffffffe9;
+  background: #fff;
   box-shadow: 4px 0 4px #00000005;
 }
 .title {
@@ -287,7 +288,7 @@ export default {
 
   .list_item {
     display: inline-block;
-    width: 100px;
+    min-width: 100px;
     background: rgba(64, 160, 255, 0.06);
     border: 1px solid rgba(64, 160, 255, 0.1);
     margin-right: 10px;

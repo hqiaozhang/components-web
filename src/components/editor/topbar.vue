@@ -4,15 +4,22 @@
         <img src="static/images/logo.png"> 
     </div>
     <div class="filename">{{$parent.title}} </div>
+    
+    <el-tooltip popper-class="title_tooltip"  content="复制预览链接" placement="top-start" effect="light">
+      <i class="iconfont btn" @click="handleCopyUrl">&#xe72c;</i>
+    </el-tooltip>
     <!-- <div class="publish_btn" @click="$parent.preview = !$parent.preview">预览</div> -->
     <el-tooltip popper-class="title_tooltip"  content="预览" placement="top-start" effect="light">
       <i class="btn iconfont icon-preview"  :class="{active: $parent.preview}" @click="$parent.preview = !$parent.preview"></i>
     </el-tooltip>
     <div class="publish_btn" @click="saveChartData">发布</div>
+
+     <input id="copyurl_input" style="opacity: 0; height: 0; width:0" />     
   </div> 
 </template>
 
 <script>
+ import { messagePopup } from '@/utils/util' 
 export default {
   data() {
     return {};
@@ -23,6 +30,15 @@ export default {
     },
   },
   methods: {
+     handleCopyUrl() {
+       var input = document.getElementById("copyurl_input");
+        let url = `http://${window.location.host}${window.location.pathname}#/view/${this.$route.params.id}`;
+        input.value = url; // 修改文本框的内容
+        input.select(); // 选中文本
+        document.execCommand("copy"); // 执行浏览器复制命令 
+        messagePopup('复制成功', 'success')
+       
+    }, 
     handleLogo() {
        this.$router.push('/home');
     },

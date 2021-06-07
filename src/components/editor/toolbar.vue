@@ -6,7 +6,7 @@
         :class="{active: panelKey === item.key}" 
         :key="item.key"
           @click="showPanel(item.key)">
-           <i class="iconfont" :class="'icon-' + item.key"></i>
+           <i class="iconfont" v-html="item.icon"></i>
           </div>
       </div> 
       <div class="btn" :class="{active: panelKey === 'layers'}" @click="showPanel('layers')">
@@ -30,18 +30,22 @@ export default {
   data() {
     return {
       panelKey: '',
-      btnList: [
+      btnList: [ 
         {
           key: 'chart',
+          icon: '&#xe647;',
           name: '图表',
         }, {
-          key: 'text',
+           key: 'text',
+          icon: '&#xe600;',
           name: '文字',
         }, {
           key: 'picture',
+          icon: '&#xe766;',
           name: '图片',
         }, {
           key: 'tools',
+          icon: '&#xe603;',
           name: '组件',
         },
       ],
@@ -74,7 +78,7 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background: #ffffffe9;
+  background: #fff;
   border-right: 1px solid rgba(0, 0, 0, 0.02);
 
   .tool_list {
@@ -102,7 +106,7 @@ export default {
       color: #409EFF;
     }
     .iconfont {
-      font-size: 24px;
+      font-size: 18px;
     }
   }
 }
@@ -113,6 +117,7 @@ export default {
   bottom: 0;
   left: 50px;
   width: 250px;
+  // max-width: 250px;
   z-index: 10;
 }
 </style>

@@ -136,6 +136,7 @@ export default {
       padding: 10px 20px;
       margin: 10px 10px;
       color: #999999;
+      cursor: pointer;
       &.active {
         color: #212121;
         border-bottom: 2px solid #212121;

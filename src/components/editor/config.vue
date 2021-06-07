@@ -98,7 +98,7 @@
 
        <div class="panel" v-show="thisKey=='general'">
          <div class="config-box">
-            <div class="title">控件名称</div>
+            <div class="title">控件名称 <i @click="handleDeleteComponent" class="el-icon-delete-solid"></i></div>
             <el-input v-model="currentElement.name"></el-input>
          </div>
 
@@ -293,24 +293,39 @@
 
        <div class="panel" v-show="thisKey=='data' && currentElement.data.type == 'image'">
          <div class="config-box">
-           <div class="title">上传图片</div>
-           <el-upload class="bg-uploader"
-            action="http://localhost:3000/api/uploadfile/"
-            :show-file-list="false"
-            :on-success="handleImageUploadSuccess"
-            :before-upload="beforeUpload">
-              <div class="bg-preview-wrapper" v-if="this.currentElement.data.datacon.img">
-                <img class="bg-preview" :src="this.currentElement.data.datacon.img" />
-              </div>
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-           </el-upload>
-
-           <el-row>
-             <el-col :span="24" v-show="this.currentElement.data.datacon.img">
-               <el-select v-model="currentElement.data.datacon.imgSize" placeholder="请选择" style="width: 100%">
+           <template v-if="currentElement.data.datacon.type == 'custom'">
+            <div class="title">上传图片</div>
+            <el-upload class="bg-uploader"
+            
+              action="http://localhost:3000/api/uploadfile/"
+              :show-file-list="false"
+              :on-success="handleImageUploadSuccess"
+              :before-upload="beforeUpload">
+                <div class="bg-preview-wrapper" v-if="currentElement.data.datacon.img">
+                  <img class="bg-preview" :src="currentElement.data.datacon.img" />
+                </div>
+                <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+            </el-upload>
+           </template> 
+           <el-row style="margin: 12px 0;">
+             <el-col :span="24" v-show="currentElement.data.datacon.img">
+               <el-select :disabled="currentElement.data.datacon.type != 'custom'" 
+                v-model="currentElement.data.datacon.imgSize" placeholder="请选择" style="width: 100%">
                  <el-option label="覆盖" value="cover"></el-option>
                  <el-option label="平铺" value="contain"></el-option>
                  <el-option label="拉伸" value="100% 100%"></el-option>
+               </el-select>
+             </el-col>
+           </el-row>
+
+           <el-row>
+             <el-col :span="24" v-show="currentElement.data.datacon.img">
+               <el-select :disabled="currentElement.data.datacon.type != 'custom'"  
+                v-model="currentElement.data.datacon.repeat" placeholder="请选择" style="width: 100%">
+                 <el-option label="no-repeat" value="no-repeat"></el-option>
+                 <el-option label="repeat" value="repeat"></el-option>
+                 <el-option label="repeat-x" value="repeat-x"></el-option>
+                 <el-option label="repeat-y" value="repeat-y"></el-option>
                </el-select>
              </el-col>
            </el-row>
@@ -354,8 +369,8 @@ export default {
   data() {
     return {
       user: {
-        uid: localStorage.getItem('uid'),
-        username: localStorage.getItem('user'),
+        uid: sessionStorage.getItem('uid'),
+        username: sessionStorage.getItem('user'),
       },
       editorSettings: {
         parentBg: 0, // 0代表背景颜色，1代表背景图片
@@ -418,6 +433,9 @@ export default {
       // console.log(file);
       // this.imageUrl = URL.createObjectURL(file.raw);
     },
+    handleDeleteComponent(index) {
+      this.$parent.deleteComponent(index);
+    }
   },
 };
 </script>
@@ -431,7 +449,7 @@ export default {
   right: 0;
   display: flex;
   flex-direction: column;
-  background: #ffffffe9;
+  background: #fff;
   color: #515151;
   box-shadow: -4px 0 4px #00000005;
   padding: 0;
@@ -453,6 +471,7 @@ export default {
       padding: 10px 20px;
       margin: 0 10px;
       color: #999999;
+      cursor: pointer;
       &.active {
         color: #212121;
         border-bottom: 2px solid #212121;
@@ -469,6 +488,13 @@ export default {
     font-weight: bold;
     font-size: 0.86rem;
     margin-bottom: 12px;
+    i.el-icon-delete-solid {
+      float: right;
+      cursor: pointer;
+      color: #1D84EF;
+      font-size: 16px;
+      opacity: 0.8;
+    }
   }
   .btn {
     display: inline-block;

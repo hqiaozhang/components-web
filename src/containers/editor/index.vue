@@ -4,7 +4,7 @@
  * @Email: 991034150@qq.com 
  * @Description: 首页
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2021-06-04 16:17:59
+ * @Last Modified time: 2021-06-07 16:23:22
  */
 
  <template>
@@ -94,8 +94,9 @@ export default {
         }
       }
     },
-    addComponent(data) {
-      this.chartData.elements.unshift(data);
+    addComponent(data) { 
+      
+      this.chartData.elements.unshift(data); 
     },
     deleteComponent(index) {
       this.chartData.elements.splice(index, 1);
@@ -109,7 +110,7 @@ export default {
           .then((res) => {
             const { errno, data } = res.data;
             if (errno === 0) {
-              this.publishPopVisible = true;
+              // this.publishPopVisible = true;
               this.$message({
                 type: "success",
                 message: "保存成功"
