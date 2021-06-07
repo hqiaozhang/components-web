@@ -24,18 +24,18 @@
      </div>
 
      <div class="component_list" v-else-if="panelKey !== ''">
-        <!-- <draggable  v-model="componentList[panelKey].children"
+        <draggable  v-model="componentList[panelKey].children"
           @start="move"
-          @end="handleAddComponent"> -->
+          @end="handleAddComponent">
           <!--  @click="handleAddComponent(item)" -->
-            <div class="list_item" v-for="(item, i) in componentList[panelKey].children" :key="i" 
-              @click="handleAddComponent(item)">
+            <div class="list_item" v-for="(item, i) in componentList[panelKey].children" :key="i" :index="i"
+             >
               <div class="img_wrapper">
                 <img :src="item.img" /> 
               </div>
               <div class="name">{{item.name}}</div>
             </div>
-          <!-- </draggable>    -->
+          </draggable>   
      </div>
    </div>
 </template>
@@ -173,7 +173,8 @@ export default {
       this.nodeMenu = this.componentList[this.panelKey].children[index]
     },
 
-    handleAddComponent(item) { 
+    handleAddComponent(evt) { 
+      let item = this.nodeMenu
       let initData = {};
       if (item.id == 'text') {
         initData = {
@@ -248,8 +249,10 @@ export default {
           }
         };
       } 
-      const component = {
-        name: "新建图层" + (this.chartData.elements.length + 1),
+      let len = this.chartData.elements.length
+      const component = { 
+        name: "新建图层" + (len + 1),
+        index: len,
         x: 10,
         y: 10,
         w: 400,
@@ -258,7 +261,7 @@ export default {
         active: false,
         data: initData
       };
-      this.$parent.$parent.addComponent(component);
+      this.$parent.$parent.addComponent(evt, component);
     },
     handleDeleteComponent(index) {
       this.$parent.$parent.deleteComponent(index);
@@ -299,7 +302,8 @@ export default {
     padding: 5px 0;
 
     &:hover {
-      cursor: pointer;
+      // cursor: pointer;
+      cursor: move;
       opacity: 0.8;
       background: rgba(64, 160, 255, 0.1);
       border: 1px solid #409eff;

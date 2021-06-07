@@ -4,7 +4,7 @@
  * @Email: 991034150@qq.com 
  * @Description: 首页
  * @Last Modified by: zhanghongqiao
- * @Last Modified time: 2021-06-07 16:23:22
+ * @Last Modified time: 2021-06-07 17:23:45
  */
 
  <template>
@@ -59,10 +59,11 @@ export default {
   },
   computed: {
     currentElement() {
+      console.log(this.currentElementIndex, 'xxxxxxxxxx')
       if (this.currentElementIndex >= 0) {
         return this.chartData.elements[this.currentElementIndex];
       }
-      return {};
+      return {w: ''};
     },
   },
   mounted() {
@@ -84,7 +85,7 @@ export default {
       this.scale = scale;
     },
     setActiveComponentByIndex(index) {
-      this.currentElementIndex = index;
+      this.currentElementIndex = index; 
       for (let i = 0; i < this.chartData.elements.length; i += 1) {
         const element = this.chartData.elements[i];
         if (index === i) {
@@ -94,11 +95,16 @@ export default {
         }
       }
     },
-    addComponent(data) { 
-      
-      this.chartData.elements.unshift(data); 
+    addComponent(evt, data) {   
+      let screenX = evt.originalEvent.clientX,
+        screenY = evt.originalEvent.clientY;
+        data.x = screenX
+        data.y = screenY
+      this.chartData.elements.push(data)
+      this.currentElementIndex = data.index
     },
     deleteComponent(index) {
+      this.currentElementIndex = -1
       this.chartData.elements.splice(index, 1);
     },
     saveChartData() {
@@ -113,7 +119,7 @@ export default {
               // this.publishPopVisible = true;
               this.$message({
                 type: "success",
-                message: "保存成功"
+                message: "发布成功"
               });
             }
           })

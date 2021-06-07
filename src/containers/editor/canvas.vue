@@ -11,9 +11,9 @@
         
       </el-dialog>
       <div class="edit_view"  tabindex="0"
-      @keydown.space.prevent="handleSpaceDown"
-      @keyup.space.prevent="handleSpaceUp"
-      @click.self="handleActivated(-1)">
+        @keydown.space.prevent="handleSpaceDown"
+        @keyup.space.prevent="handleSpaceUp"
+        @click.self="handleActivated(-1)">
         <vue-draggable-resizable   :style="wrapStyle"
           :x="100"
           :y="50"
@@ -44,7 +44,7 @@
             :isResizable="!$parent.preview"
             @activated="handleActivated(index)"
             @resizing="handleResize(item, arguments[0])"
-            @dragging="handleDrag(item, arguments[0])">
+            @dragging="handleDrag(item, arguments[0])"> 
               <div class="filler" v-if="item.data.type == 'chart'"
                 :style="{width: '100%', height: '100%', backgroundColor: item.bgcolor}">
                 <ve-map  v-if="item.data.settings.type=='map'"
@@ -160,7 +160,7 @@ export default {
     handleActivated(index) {
       this.$parent.setActiveComponentByIndex(index);
     },
-    handleResize(widget, arg) {
+    handleResize(widget, arg) { 
       const item = widget;
       item.x = arg.left;
       item.y = arg.top;
@@ -211,6 +211,9 @@ export default {
   height: 100%;
   .vdr {
     border: 0;
+    &.active  {
+      cursor: move;
+    }
   }
   .filler {
     .textcontainer {

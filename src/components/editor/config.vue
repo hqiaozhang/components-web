@@ -1,5 +1,5 @@
 <template>
-   <div class="config">
+   <div class="config">  
      <div class="public_config" v-if="!currentElement.w">
        <div class="config-box">
          <div class="title"> 画布大小</div>
@@ -433,8 +433,8 @@ export default {
       // console.log(file);
       // this.imageUrl = URL.createObjectURL(file.raw);
     },
-    handleDeleteComponent(index) {
-      this.$parent.deleteComponent(index);
+    handleDeleteComponent(index) { 
+      this.$parent.deleteComponent(this.currentElement.index);
     }
   },
 };
